@@ -22,13 +22,13 @@ Dependency injection is managed centrally using `get_it` in `lib/injection_conta
 #### Subcollection: `rooms/{roomId}/messages`
 - **Document ID:** Auto-generated ID
 - **Fields:**
-  - `text` (String): The message content.
-  - `senderId` (String): A unique ID tied securely to the user's device via SharedPreferences.
-  - `senderName` (String): The user's randomly generated anonymous name.
-  - `senderAvatar` (String): URL of the generated avatar.
-  - `createdAt` (Timestamp): Server timestamp for chronological sorting.
+  - `text` (String)
+  - `senderId` (String)
+  - `senderName` (String)
+  - `senderAvatar` (String)
+  - `createdAt` (Timestamp)
 
 ## Deployment & Deliverables
 
-- **Working APK:** [Download rumour_app.apk](./rumour_app.apk)
+- **Working APK:** [Download rumour_app.apk](./apk/rumour_app.apk)
 - **Workflow Demonstration Video:** [Paste Video Link Here]
