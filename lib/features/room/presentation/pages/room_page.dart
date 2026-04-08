@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/room_bloc.dart';
 import '../bloc/room_event.dart';
 import '../bloc/room_state.dart';
+import '../../identity/presentation/pages/identity_page.dart';
 
 class RoomPage extends StatefulWidget {
   const RoomPage({super.key});
@@ -42,17 +43,12 @@ class _RoomPageState extends State<RoomPage> {
         child: BlocListener<RoomBloc, RoomState>(
           listener: (context, state) {
             if (state is RoomJoined) {
-              // TODO: Navigate to NameGenerator screen
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Joined Room: ${state.roomId}',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => IdentityPage(
+                    roomId: state.roomId,
                   ),
-                  backgroundColor: const Color(0xFFC1FF72), // Neon green accent
                 ),
               );
             } else if (state is RoomError) {
@@ -183,7 +179,7 @@ class _RoomPageState extends State<RoomPage> {
           'Join / Create Room',
           style: TextStyle(
             fontSize: 18,
-            fontWeight: FontWeight.w700, // Prominent bold as per Figma
+            fontWeight: FontWeight.w700, 
           ),
         ),
       ),
