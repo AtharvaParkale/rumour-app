@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rumour_app/features/identity/presentation/pages/identity_page.dart';
 import '../bloc/room_bloc.dart';
 import '../bloc/room_event.dart';
 import '../bloc/room_state.dart';
+import 'package:rumour_app/features/identity/presentation/pages/identity_page.dart';
 
 class RoomPage extends StatefulWidget {
   const RoomPage({super.key});
@@ -18,7 +18,6 @@ class _RoomPageState extends State<RoomPage> {
   @override
   void initState() {
     super.initState();
-    // Dispatch LoadRooms event to start listening to the stream
     context.read<RoomBloc>().add(LoadRooms());
   }
 
@@ -38,7 +37,7 @@ class _RoomPageState extends State<RoomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF0A0A0A),
       body: SafeArea(
         child: BlocListener<RoomBloc, RoomState>(
           listener: (context, state) {
@@ -46,16 +45,16 @@ class _RoomPageState extends State<RoomPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => IdentityPage(
-                    roomId: state.roomId,
-                  ),
+                  builder: (_) => IdentityPage(roomId: state.roomId),
                 ),
               );
             } else if (state is RoomError) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(state.message),
+                  content: Text(state.message, style: const TextStyle(fontWeight: FontWeight.w600)),
                   backgroundColor: Colors.redAccent,
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
               );
             }
@@ -72,9 +71,9 @@ class _RoomPageState extends State<RoomPage> {
                   'Join A Room',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: -1,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -0.5,
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -82,7 +81,8 @@ class _RoomPageState extends State<RoomPage> {
                   'Enter the code to join the anonymous chat room',
                   style: TextStyle(
                     color: Colors.grey,
-                    fontSize: 16,
+                    fontSize: 15,
+                    height: 1.4,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -90,15 +90,15 @@ class _RoomPageState extends State<RoomPage> {
                 _buildCodeField(),
                 const SizedBox(height: 16),
                 _buildJoinButton(),
-                const SizedBox(height: 40),
+                const SizedBox(height: 48),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Active Rooms',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
@@ -114,48 +114,49 @@ class _RoomPageState extends State<RoomPage> {
 
   Widget _buildLogo() {
     return Container(
-      width: 80,
-      height: 80,
+      width: 72,
+      height: 72,
       decoration: BoxDecoration(
         color: const Color(0xFF161616),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
       ),
       child: const Center(
-        child: Icon(
-          Icons.key_rounded,
-          color: Color(0xFFC1FF72),
-          size: 36,
-        ),
+        child: Icon(Icons.tag_rounded, color: Color(0xFFC1FF72), size: 32),
       ),
     );
   }
 
   Widget _buildCodeField() {
     return Container(
+      height: 64,
       decoration: BoxDecoration(
         color: const Color(0xFF161616),
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
       ),
-      child: TextField(
-        controller: _codeController,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 2,
-        ),
-        textAlign: TextAlign.center,
-        cursorColor: const Color(0xFFC1FF72),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: 'Enter room code',
-          hintStyle: TextStyle(
-            color: Colors.grey[700],
-            fontSize: 16,
-            letterSpacing: 0,
-            fontWeight: FontWeight.normal,
+      child: Center(
+        child: TextField(
+          controller: _codeController,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 4,
           ),
-          contentPadding: const EdgeInsets.symmetric(vertical: 20),
+          textAlign: TextAlign.center,
+          cursorColor: const Color(0xFFC1FF72),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: 'CODE',
+            hintStyle: TextStyle(
+              color: Colors.grey[700],
+              fontSize: 16,
+              letterSpacing: 2,
+              fontWeight: FontWeight.w600,
+            ),
+            contentPadding: EdgeInsets.zero,
+          ),
         ),
       ),
     );
@@ -176,10 +177,10 @@ class _RoomPageState extends State<RoomPage> {
           elevation: 0,
         ),
         child: const Text(
-          'Join / Create Room',
+          'Join or Create',
           style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w700, 
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
@@ -191,20 +192,19 @@ class _RoomPageState extends State<RoomPage> {
       child: BlocBuilder<RoomBloc, RoomState>(
         builder: (context, state) {
           if (state is RoomLoading) {
-            return const Center(
-              child: CircularProgressIndicator(color: Color(0xFFC1FF72)),
-            );
+            return const Center(child: CircularProgressIndicator(color: Color(0xFFC1FF72)));
           } else if (state is RoomLoaded) {
             if (state.rooms.isEmpty) {
               return Center(
                 child: Text(
                   'No active rooms yet',
-                  style: TextStyle(color: Colors.grey[700]),
+                  style: TextStyle(color: Colors.grey[700], fontSize: 15),
                 ),
               );
             }
             return ListView.builder(
               itemCount: state.rooms.length,
+              physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 final room = state.rooms[index];
                 return Padding(
@@ -212,32 +212,31 @@ class _RoomPageState extends State<RoomPage> {
                   child: ListTile(
                     onTap: () => _dispatchJoinEvent(room.id),
                     tileColor: const Color(0xFF161616),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
+                      side: BorderSide(color: Colors.white.withValues(alpha: 0.05)),
                     ),
-                    leading: const CircleAvatar(
-                      backgroundColor: Colors.black,
-                      child: Icon(Icons.tag, color: Color(0xFFC1FF72), size: 20),
+                    leading: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(Icons.tag, color: Color(0xFFC1FF72), size: 18),
                     ),
                     title: Text(
                       room.id,
                       style: const TextStyle(
                         color: Colors.white,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                    trailing: const Icon(Icons.chevron_right_rounded, color: Colors.grey, size: 20),
                   ),
                 );
               },
-            );
-          } else if (state is RoomError) {
-            return Center(
-              child: Text(
-                state.message,
-                style: const TextStyle(color: Colors.redAccent),
-                textAlign: TextAlign.center,
-              ),
             );
           }
           return const SizedBox.shrink();
