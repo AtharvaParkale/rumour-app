@@ -4,6 +4,7 @@ import '../bloc/room_bloc.dart';
 import '../bloc/room_event.dart';
 import '../bloc/room_state.dart';
 import 'package:rumour_app/features/identity/presentation/pages/identity_page.dart';
+import 'package:pinput/pinput.dart';
 
 class RoomPage extends StatefulWidget {
   const RoomPage({super.key});
@@ -121,44 +122,57 @@ class _RoomPageState extends State<RoomPage> {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
       ),
-      child: const Center(
-        child: Icon(Icons.tag_rounded, color: Color(0xFFC1FF72), size: 32),
+      child: Center(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Image.asset(
+            'assets/icons/App Logo.png',
+            width: 48,
+            height: 48,
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }
 
   Widget _buildCodeField() {
-    return Container(
+    final defaultPinTheme = PinTheme(
+      width: 56,
       height: 64,
+      textStyle: const TextStyle(
+        fontSize: 24,
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+      ),
       decoration: BoxDecoration(
         color: const Color(0xFF161616),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
       ),
-      child: Center(
-        child: TextField(
-          controller: _codeController,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 4,
-          ),
-          textAlign: TextAlign.center,
-          cursorColor: const Color(0xFFC1FF72),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: 'CODE',
-            hintStyle: TextStyle(
-              color: Colors.grey[700],
-              fontSize: 16,
-              letterSpacing: 2,
-              fontWeight: FontWeight.w600,
-            ),
-            contentPadding: EdgeInsets.zero,
-          ),
-        ),
+    );
+
+    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
+      border: Border.all(color: const Color(0xFFC1FF72), width: 2),
+      borderRadius: BorderRadius.circular(16),
+    );
+
+    return Pinput(
+      controller: _codeController,
+      length: 4,
+      keyboardType: TextInputType.number,
+      defaultPinTheme: defaultPinTheme,
+      focusedPinTheme: focusedPinTheme,
+      separatorBuilder: (index) => const SizedBox(width: 12),
+      onSubmitted: (_) => _dispatchJoinEvent(),
+      showCursor: true,
+      cursor: Container(
+        width: 2,
+        height: 24,
+        color: const Color(0xFFC1FF72),
+        margin: const EdgeInsets.only(bottom: 8),
       ),
+      mainAxisAlignment: MainAxisAlignment.center,
     );
   }
 

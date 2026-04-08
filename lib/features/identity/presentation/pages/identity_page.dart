@@ -90,7 +90,24 @@ class _IdentityPageState extends State<IdentityPage> {
           },
           builder: (context, state) {
             if (state is IdentityInitial || state is IdentityLoading) {
-              return const Center(child: CircularProgressIndicator(color: Color(0xFFC1FF72)));
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const CircularProgressIndicator(color: Color(0xFFC1FF72)),
+                    const SizedBox(height: 24),
+                    Text(
+                      'GENERATING IDENTITY...',
+                      style: TextStyle(
+                        color: Colors.grey[500],
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
+              );
             }
 
             if (state is IdentityGenerated && _generatedUser != null) {
