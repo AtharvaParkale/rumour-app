@@ -138,37 +138,39 @@ class _RoomPageState extends State<RoomPage> {
 
   Widget _buildCodeField() {
     final defaultPinTheme = PinTheme(
-      width: 56,
-      height: 64,
+      width: 44,
+      height: 56,
       textStyle: const TextStyle(
-        fontSize: 24,
+        fontSize: 28,
         color: Colors.white,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w600,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFF161616),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+        border: Border(bottom: BorderSide(color: Colors.grey[800]!, width: 2)),
       ),
     );
 
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: const Color(0xFFC1FF72), width: 2),
-      borderRadius: BorderRadius.circular(16),
+      border: const Border(bottom: BorderSide(color: Color(0xFFC1FF72), width: 3)),
+    );
+
+    final submittedPinTheme = defaultPinTheme.copyDecorationWith(
+      border: Border(bottom: BorderSide(color: Colors.white.withValues(alpha: 0.5), width: 2)),
     );
 
     return Pinput(
       controller: _codeController,
-      length: 4,
+      length: 6,
       keyboardType: TextInputType.number,
       defaultPinTheme: defaultPinTheme,
       focusedPinTheme: focusedPinTheme,
+      submittedPinTheme: submittedPinTheme,
       separatorBuilder: (index) => const SizedBox(width: 12),
       onSubmitted: (_) => _dispatchJoinEvent(),
       showCursor: true,
       cursor: Container(
         width: 2,
-        height: 24,
+        height: 28,
         color: const Color(0xFFC1FF72),
         margin: const EdgeInsets.only(bottom: 8),
       ),
