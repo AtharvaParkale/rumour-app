@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rumour_app/features/identity/presentation/pages/identity_page.dart';
 import '../bloc/room_bloc.dart';
 import '../bloc/room_event.dart';
 import '../bloc/room_state.dart';
-import '../../identity/presentation/pages/identity_page.dart';
 
 class RoomPage extends StatefulWidget {
   const RoomPage({super.key});

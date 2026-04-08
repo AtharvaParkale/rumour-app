@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rumour_app/features/chat/presentation/pages/chat_page.dart';
 import '../bloc/identity_bloc.dart';
 import '../bloc/identity_event.dart';
 import '../bloc/identity_state.dart';
 import '../../domain/entities/user_identity.dart';
-import '../../chat/presentation/pages/chat_page.dart';
 
 class IdentityPage extends StatefulWidget {
   final String roomId;
   final int memberCount;
 
-  const IdentityPage({
-    super.key,
-    required this.roomId,
-    this.memberCount = 1,
-  });
+  const IdentityPage({super.key, required this.roomId, this.memberCount = 1});
 
   @override
   State<IdentityPage> createState() => _IdentityPageState();
@@ -38,8 +34,7 @@ class _IdentityPageState extends State<IdentityPage> {
         builder: (_) => ChatPage(
           roomId: widget.roomId,
           memberCount: widget.memberCount,
-          // TODO: Pass user as argument securely when ChatPage requires it in the constructor
-          // user: user,
+          currentUser: user,
         ),
       ),
     );
@@ -71,10 +66,7 @@ class _IdentityPageState extends State<IdentityPage> {
             const SizedBox(height: 4),
             Text(
               '${widget.memberCount} members',
-              style: TextStyle(
-                color: Colors.grey[500],
-                fontSize: 12,
-              ),
+              style: TextStyle(color: Colors.grey[500], fontSize: 12),
             ),
           ],
         ),
@@ -110,7 +102,7 @@ class _IdentityPageState extends State<IdentityPage> {
                 child: CircularProgressIndicator(color: Color(0xFFC1FF72)),
               );
             }
-            
+
             // Only render generated UI if we successfully loaded/generated an explicit Identity
             if (state is IdentityGenerated && _generatedUser != null) {
               return Padding(
@@ -134,14 +126,16 @@ class _IdentityPageState extends State<IdentityPage> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: const Color(0xFFC1FF72).withOpacity(0.2),
+                                color: const Color(0xFFC1FF72).withValues(alpha: 0.2),
                                 width: 4,
                               ),
                             ),
                             child: CircleAvatar(
                               radius: 56,
                               backgroundColor: const Color(0xFF161616),
-                              backgroundImage: NetworkImage(_generatedUser!.avatar),
+                              backgroundImage: NetworkImage(
+                                _generatedUser!.avatar,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 32),
@@ -173,10 +167,12 @@ class _IdentityPageState extends State<IdentityPage> {
                       child: ElevatedButton(
                         onPressed: () {
                           // Dispatch SaveIdentityEvent strictly passing Local Cached state securely to IdentityBloc
-                          context.read<IdentityBloc>().add(SaveIdentityEvent(
-                            roomId: widget.roomId,
-                            user: _generatedUser!,
-                          ));
+                          context.read<IdentityBloc>().add(
+                            SaveIdentityEvent(
+                              roomId: widget.roomId,
+                              user: _generatedUser!,
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFC1FF72),
