@@ -30,8 +30,10 @@ class MessageModel extends Message {
       'senderId': senderId,
       'senderName': senderName,
       'senderAvatar': senderAvatar,
-      if (createdAt != null) 'createdAt': Timestamp.fromDate(createdAt!)
-      else 'createdAt': FieldValue.serverTimestamp(),
+      if (createdAt != null)
+        'createdAt': Timestamp.fromDate(createdAt!)
+      else
+        'createdAt': FieldValue.serverTimestamp(),
     };
   }
 }

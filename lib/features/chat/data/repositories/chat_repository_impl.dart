@@ -10,9 +10,14 @@ class ChatRepositoryImpl implements ChatRepository {
   ChatRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Stream<(List<Message>, Object?)> getMessages(String roomId, {Object? lastDocument}) {
+  Stream<(List<Message>, Object?)> getMessages(
+    String roomId, {
+    Object? lastDocument,
+  }) {
     final docSnap = lastDocument as DocumentSnapshot?;
-    return remoteDataSource.getMessages(roomId, lastDocument: docSnap).map((record) {
+    return remoteDataSource.getMessages(roomId, lastDocument: docSnap).map((
+      record,
+    ) {
       final (models, lastDoc) = record;
       return (List<Message>.from(models), lastDoc);
     });

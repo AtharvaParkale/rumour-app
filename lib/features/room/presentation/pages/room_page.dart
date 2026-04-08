@@ -52,10 +52,15 @@ class _RoomPageState extends State<RoomPage> {
             } else if (state is RoomError) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(state.message, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  content: Text(
+                    state.message,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
                   backgroundColor: Colors.redAccent,
                   behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
               );
             }
@@ -151,11 +156,18 @@ class _RoomPageState extends State<RoomPage> {
     );
 
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: const Border(bottom: BorderSide(color: Color(0xFFC1FF72), width: 3)),
+      border: const Border(
+        bottom: BorderSide(color: Color(0xFFC1FF72), width: 3),
+      ),
     );
 
     final submittedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border(bottom: BorderSide(color: Colors.white.withValues(alpha: 0.5), width: 2)),
+      border: Border(
+        bottom: BorderSide(
+          color: Colors.white.withValues(alpha: 0.5),
+          width: 2,
+        ),
+      ),
     );
 
     return Pinput(
@@ -194,10 +206,7 @@ class _RoomPageState extends State<RoomPage> {
         ),
         child: const Text(
           'Join or Create',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
     );
@@ -208,7 +217,9 @@ class _RoomPageState extends State<RoomPage> {
       child: BlocBuilder<RoomBloc, RoomState>(
         builder: (context, state) {
           if (state is RoomLoading) {
-            return const Center(child: CircularProgressIndicator(color: Color(0xFFC1FF72)));
+            return const Center(
+              child: CircularProgressIndicator(color: Color(0xFFC1FF72)),
+            );
           } else if (state is RoomLoaded) {
             if (state.rooms.isEmpty) {
               return Center(
@@ -228,10 +239,15 @@ class _RoomPageState extends State<RoomPage> {
                   child: ListTile(
                     onTap: () => _dispatchJoinEvent(room.id),
                     tileColor: const Color(0xFF161616),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 4,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
-                      side: BorderSide(color: Colors.white.withValues(alpha: 0.05)),
+                      side: BorderSide(
+                        color: Colors.white.withValues(alpha: 0.05),
+                      ),
                     ),
                     leading: Container(
                       padding: const EdgeInsets.all(8),
@@ -239,7 +255,11 @@ class _RoomPageState extends State<RoomPage> {
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.tag, color: Color(0xFFC1FF72), size: 18),
+                      child: const Icon(
+                        Icons.tag,
+                        color: Color(0xFFC1FF72),
+                        size: 18,
+                      ),
                     ),
                     title: Text(
                       room.id,
@@ -249,7 +269,11 @@ class _RoomPageState extends State<RoomPage> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    trailing: const Icon(Icons.chevron_right_rounded, color: Colors.grey, size: 20),
+                    trailing: const Icon(
+                      Icons.chevron_right_rounded,
+                      color: Colors.grey,
+                      size: 20,
+                    ),
                   ),
                 );
               },

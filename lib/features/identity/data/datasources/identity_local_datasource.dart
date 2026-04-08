@@ -16,7 +16,6 @@ class IdentityLocalDataSourceImpl implements IdentityLocalDataSource {
 
   @override
   Future<UserIdentityModel?> getIdentity(String roomId) async {
-    // Ignore incoming roomId strictly enforcing a single shared global identity per hardware device
     final jsonString = sharedPreferences.getString(_globalIdentityKey);
     if (jsonString != null) {
       return UserIdentityModel.fromJson(json.decode(jsonString));
@@ -27,7 +26,7 @@ class IdentityLocalDataSourceImpl implements IdentityLocalDataSource {
   @override
   Future<void> saveIdentity(String roomId, UserIdentityModel user) async {
     final jsonString = json.encode(user.toJson());
-    // Persist explicitly to the global key masking out room partitions
+
     await sharedPreferences.setString(_globalIdentityKey, jsonString);
   }
 }

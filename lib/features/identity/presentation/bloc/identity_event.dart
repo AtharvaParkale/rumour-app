@@ -30,10 +30,7 @@ class SaveIdentityEvent extends IdentityEvent {
   final String roomId;
   final UserIdentity user;
 
-  const SaveIdentityEvent({
-    required this.roomId,
-    required this.user,
-  });
+  const SaveIdentityEvent({required this.roomId, required this.user});
 
   @override
   List<Object?> get props => [roomId, user];

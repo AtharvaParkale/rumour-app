@@ -10,11 +10,9 @@ import 'features/chat/presentation/bloc/chat_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // Initializes Firebase mappings assuming google-services.json / GoogleService-Info.plist are linked natively
+
   await Firebase.initializeApp();
-  
-  // Await Dependency Container bootstrapping mapping 
+
   await di.init();
 
   runApp(const RumourApp());
@@ -25,7 +23,6 @@ class RumourApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Top routing safely pulls completely from injection abstraction map
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => di.sl<RoomBloc>()),
@@ -38,7 +35,7 @@ class RumourApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.dark,
           scaffoldBackgroundColor: const Color(0xFF0A0A0A),
-          primaryColor: const Color(0xFFC1FF72), // Vibrant Neon Green
+          primaryColor: const Color(0xFFC1FF72),
           colorScheme: const ColorScheme.dark(
             primary: Color(0xFFC1FF72),
             secondary: Color(0xFFC1FF72),

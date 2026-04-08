@@ -21,10 +21,7 @@ class SendMessageEvent extends ChatEvent {
   final String roomId;
   final Message message;
 
-  const SendMessageEvent({
-    required this.roomId,
-    required this.message,
-  });
+  const SendMessageEvent({required this.roomId, required this.message});
 
   @override
   List<Object?> get props => [roomId, message];

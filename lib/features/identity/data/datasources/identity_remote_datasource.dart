@@ -19,17 +19,13 @@ class IdentityRemoteDataSourceImpl implements IdentityRemoteDataSource {
       final decoded = json.decode(response.body);
       final userResult = decoded['results'][0];
 
-      final name = '${userResult['name']['first']} ${userResult['name']['last']}';
+      final name =
+          '${userResult['name']['first']} ${userResult['name']['last']}';
       final avatar = userResult['picture']['large'];
-      
-      // Since it's a random identity mapping, generating a safe local timestamp-based ID cleanly
+
       final safeId = DateTime.now().microsecondsSinceEpoch.toString();
 
-      return UserIdentityModel(
-        id: safeId,
-        name: name,
-        avatar: avatar,
-      );
+      return UserIdentityModel(id: safeId, name: name, avatar: avatar);
     } else {
       throw Exception('Failed to fetch a new identity randomly.');
     }

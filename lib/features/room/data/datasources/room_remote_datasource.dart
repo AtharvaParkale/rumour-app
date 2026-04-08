@@ -10,7 +10,7 @@ class RoomRemoteDataSourceImpl implements RoomRemoteDataSource {
   final FirebaseFirestore _firestore;
 
   RoomRemoteDataSourceImpl({required FirebaseFirestore firestore})
-      : _firestore = firestore;
+    : _firestore = firestore;
 
   @override
   Future<void> createOrJoinRoom(String roomId) async {
@@ -19,9 +19,7 @@ class RoomRemoteDataSourceImpl implements RoomRemoteDataSource {
     final roomSnapshot = await roomDocRef.get();
 
     if (!roomSnapshot.exists) {
-      await roomDocRef.set({
-        'createdAt': FieldValue.serverTimestamp(),
-      });
+      await roomDocRef.set({'createdAt': FieldValue.serverTimestamp()});
     }
   }
 

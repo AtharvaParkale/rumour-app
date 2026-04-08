@@ -16,10 +16,6 @@ class UserIdentityModel extends UserIdentity {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'avatar': avatar,
-    };
+    return {'id': id, 'name': name, 'avatar': avatar};
   }
 }

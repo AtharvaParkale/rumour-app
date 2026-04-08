@@ -31,4 +31,4 @@ Dependency injection is managed centrally using `get_it` in `lib/injection_conta
 ## Deployment & Deliverables
 
 - **Working APK:** [Download rumour_app.apk](./apk/rumour_app.apk)
-- **Workflow Demonstration Video:** [Paste Video Link Here]
+- **Workflow Demonstration Video:** [https://drive.google.com/file/d/1Q03fown9I8fT6mDVcIACm8SL0Gg3PUUh/view?usp=sharing]

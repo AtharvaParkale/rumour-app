@@ -9,12 +9,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final GetMessages _getMessages;
   final SendMessage _sendMessage;
 
-  ChatBloc({
-    required GetMessages getMessages,
-    required SendMessage sendMessage,
-  })  : _getMessages = getMessages,
-        _sendMessage = sendMessage,
-        super(ChatInitial()) {
+  ChatBloc({required GetMessages getMessages, required SendMessage sendMessage})
+    : _getMessages = getMessages,
+      _sendMessage = sendMessage,
+      super(ChatInitial()) {
     on<LoadMessages>(_onLoadMessages);
     on<SendMessageEvent>(_onSendMessageEvent);
   }
@@ -28,8 +26,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     await emit.forEach<(List<Message>, Object?)>(
       _getMessages.call(event.roomId),
       onData: (record) {
-        final (messages, _) = record; 
-        // The unassigned '_' cursor can effectively be stored in Bloc state next time 'LoadMoreMessages' is requested without causing compilation breaks here.
+        final (messages, _) = record;
+
         return ChatLoaded(messages);
       },
       onError: (error, stackTrace) => ChatError(error.toString()),

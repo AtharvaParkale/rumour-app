@@ -10,11 +10,7 @@ class IdentityPage extends StatefulWidget {
   final String roomId;
   final int memberCount;
 
-  const IdentityPage({
-    super.key,
-    required this.roomId,
-    this.memberCount = 1,
-  });
+  const IdentityPage({super.key, required this.roomId, this.memberCount = 1});
 
   @override
   State<IdentityPage> createState() => _IdentityPageState();
@@ -50,7 +46,11 @@ class _IdentityPageState extends State<IdentityPage> {
         backgroundColor: const Color(0xFF0A0A0A),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.white,
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
@@ -68,7 +68,11 @@ class _IdentityPageState extends State<IdentityPage> {
             const SizedBox(height: 2),
             Text(
               '${widget.memberCount} members',
-              style: TextStyle(color: Colors.grey[500], fontSize: 13, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                color: Colors.grey[500],
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
@@ -84,7 +88,10 @@ class _IdentityPageState extends State<IdentityPage> {
               if (_generatedUser != null) _navigateToChat(_generatedUser!);
             } else if (state is IdentityError) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message), backgroundColor: Colors.redAccent),
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: Colors.redAccent,
+                ),
               );
             }
           },
@@ -112,7 +119,10 @@ class _IdentityPageState extends State<IdentityPage> {
 
             if (state is IdentityGenerated && _generatedUser != null) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 16.0,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -134,21 +144,25 @@ class _IdentityPageState extends State<IdentityPage> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: const Color(0xFFC1FF72).withValues(alpha: 0.15),
+                                color: const Color(
+                                  0xFFC1FF72,
+                                ).withValues(alpha: 0.15),
                                 width: 6,
                               ),
                             ),
                             child: CircleAvatar(
                               radius: 64,
                               backgroundColor: const Color(0xFF161616),
-                              backgroundImage: NetworkImage(_generatedUser!.avatar),
+                              backgroundImage: NetworkImage(
+                                _generatedUser!.avatar,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 32),
                           Text(
                             _generatedUser!.name,
                             style: const TextStyle(
-                              color: Color(0xFFC1FF72), // Vivid Neon Green
+                              color: Color(0xFFC1FF72),
                               fontSize: 32,
                               fontWeight: FontWeight.w800,
                               letterSpacing: -0.5,
@@ -158,7 +172,9 @@ class _IdentityPageState extends State<IdentityPage> {
                           ),
                           const SizedBox(height: 16),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
                             child: Text(
                               'This is your anonymous identifier, visible only to others in the room.',
                               style: TextStyle(

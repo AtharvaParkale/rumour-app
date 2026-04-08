@@ -12,18 +12,16 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   RoomBloc({
     required CreateOrJoinRoom createOrJoinRoom,
     required GetRooms getRooms,
-  })  : _createOrJoinRoom = createOrJoinRoom,
-        _getRooms = getRooms,
-        super(RoomInitial()) {
+  }) : _createOrJoinRoom = createOrJoinRoom,
+       _getRooms = getRooms,
+       super(RoomInitial()) {
     on<LoadRooms>(_onLoadRooms);
     on<CreateOrJoinRoomEvent>(_onCreateOrJoinRoom);
   }
 
   Future<void> _onLoadRooms(LoadRooms event, Emitter<RoomState> emit) async {
     emit(RoomLoading());
-    
-    // emit.forEach handles the Stream subscription internally 
-    // and naturally mitigates memory leaks by closing on its own.
+
     await emit.forEach<List<Room>>(
       _getRooms.call(),
       onData: (rooms) => RoomLoaded(rooms),

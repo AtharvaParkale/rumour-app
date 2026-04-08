@@ -14,7 +14,6 @@ class RoomRepositoryImpl implements RoomRepository {
 
   @override
   Stream<List<Room>> getRooms() {
-    // RoomModel correctly subclasses Room, so passing to Stream<List<Room>> works implicitly with Dart types
     return remoteDataSource.getRooms();
   }
 }

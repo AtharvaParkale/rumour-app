@@ -32,7 +32,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _msgController = TextEditingController();
-  bool _isLoadingMore = false; 
+  bool _isLoadingMore = false;
 
   @override
   void initState() {
@@ -51,7 +51,8 @@ class _ChatPageState extends State<ChatPage> {
 
   void _onScroll() {
     if (!_scrollController.hasClients) return;
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
       if (!_isLoadingMore) {
         _isLoadingMore = true;
         context.read<ChatBloc>().add(LoadMoreMessages(widget.roomId));
@@ -66,19 +67,23 @@ class _ChatPageState extends State<ChatPage> {
     final text = _msgController.text.trim();
     if (text.isEmpty) return;
     final message = Message(
-      id: '', 
+      id: '',
       text: text,
       senderId: widget.currentUser.id,
       senderName: widget.currentUser.name,
       senderAvatar: widget.currentUser.avatar,
-      createdAt: null, 
+      createdAt: null,
     );
-    context.read<ChatBloc>().add(SendMessageEvent(roomId: widget.roomId, message: message));
+    context.read<ChatBloc>().add(
+      SendMessageEvent(roomId: widget.roomId, message: message),
+    );
     _msgController.clear();
   }
 
   bool _isSameDay(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   String _formatDateSeparator(DateTime? date) {
@@ -90,13 +95,28 @@ class _ChatPageState extends State<ChatPage> {
 
     if (target == today) return 'TODAY';
     if (target == yesterday) return 'YESTERDAY';
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     return '${date.day} ${months[date.month - 1]}'.toUpperCase();
   }
 
   String _formatTime(DateTime? date) {
     if (date == null) return "Sending...";
-    final hour = date.hour > 12 ? date.hour - 12 : (date.hour == 0 ? 12 : date.hour);
+    final hour = date.hour > 12
+        ? date.hour - 12
+        : (date.hour == 0 ? 12 : date.hour);
     final minute = date.minute.toString().padLeft(2, '0');
     final period = date.hour >= 12 ? 'PM' : 'AM';
     return '$hour:$minute $period';
@@ -110,7 +130,11 @@ class _ChatPageState extends State<ChatPage> {
         backgroundColor: const Color(0xFF0A0A0A),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.white,
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         titleSpacing: 0,
@@ -119,12 +143,20 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             Text(
               'Room #${widget.roomId}',
-              style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
             ),
             const SizedBox(height: 2),
             Text(
               '${widget.memberCount} members',
-              style: TextStyle(color: Colors.grey[500], fontSize: 13, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                color: Colors.grey[500],
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
@@ -170,7 +202,9 @@ class _ChatPageState extends State<ChatPage> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Row(
-        mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isMe
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!isMe) ...[
@@ -183,20 +217,26 @@ class _ChatPageState extends State<ChatPage> {
           ],
           Flexible(
             child: Container(
-              constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.75,
+              ),
               child: Column(
-                crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                crossAxisAlignment: isMe
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      left: isMe ? 0 : 4.0, 
-                      right: isMe ? 4.0 : 0, 
-                      bottom: 6.0
+                      left: isMe ? 0 : 4.0,
+                      right: isMe ? 4.0 : 0,
+                      bottom: 6.0,
                     ),
                     child: Text(
                       message.senderName,
                       style: TextStyle(
-                        color: isMe ? const Color(0xFFC1FF72).withValues(alpha: 0.9) : Colors.grey[400],
+                        color: isMe
+                            ? const Color(0xFFC1FF72).withValues(alpha: 0.9)
+                            : Colors.grey[400],
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 0.2,
@@ -204,9 +244,14 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 12.0,
+                    ),
                     decoration: BoxDecoration(
-                      color: isMe ? const Color(0xFFC1FF72) : const Color(0xFF1E1E1E),
+                      color: isMe
+                          ? const Color(0xFFC1FF72)
+                          : const Color(0xFF1E1E1E),
                       borderRadius: BorderRadius.only(
                         topLeft: const Radius.circular(20),
                         topRight: const Radius.circular(20),
@@ -215,7 +260,7 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                     ),
                     child: Text(
-                      message.text, 
+                      message.text,
                       style: TextStyle(
                         color: isMe ? Colors.black : Colors.white,
                         fontSize: 15,
@@ -253,23 +298,33 @@ class _ChatPageState extends State<ChatPage> {
     return BlocBuilder<ChatBloc, ChatState>(
       builder: (context, state) {
         if (state is ChatLoading) {
-          return const Center(child: CircularProgressIndicator(color: Color(0xFFC1FF72)));
+          return const Center(
+            child: CircularProgressIndicator(color: Color(0xFFC1FF72)),
+          );
         } else if (state is ChatLoaded) {
           if (state.messages.isEmpty) {
-            return Center(child: Text('No messages yet', style: TextStyle(color: Colors.grey[600])));
+            return Center(
+              child: Text(
+                'No messages yet',
+                style: TextStyle(color: Colors.grey[600]),
+              ),
+            );
           }
 
           return ListView.builder(
             controller: _scrollController,
-            reverse: true, 
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+            reverse: true,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 16.0,
+            ),
             itemCount: state.messages.length,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               final message = state.messages[index];
               final isMe = message.senderId == widget.currentUser.id;
               final currentMsgDate = message.createdAt ?? DateTime.now();
-              
+
               bool showSeparator = false;
               if (index == state.messages.length - 1) {
                 showSeparator = true;
@@ -281,14 +336,20 @@ class _ChatPageState extends State<ChatPage> {
 
               return Column(
                 children: [
-                  if (showSeparator) _buildDateSeparator(_formatDateSeparator(currentMsgDate)),
+                  if (showSeparator)
+                    _buildDateSeparator(_formatDateSeparator(currentMsgDate)),
                   _buildMessageBubble(message, isMe),
                 ],
               );
             },
           );
         } else if (state is ChatError) {
-          return Center(child: Text(state.message, style: const TextStyle(color: Colors.redAccent)));
+          return Center(
+            child: Text(
+              state.message,
+              style: const TextStyle(color: Colors.redAccent),
+            ),
+          );
         }
         return const SizedBox.shrink();
       },
@@ -306,12 +367,17 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             Expanded(
               child: Container(
-                constraints: const BoxConstraints(minHeight: 48, maxHeight: 120),
+                constraints: const BoxConstraints(
+                  minHeight: 48,
+                  maxHeight: 120,
+                ),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 decoration: BoxDecoration(
                   color: const Color(0xFF161616),
                   borderRadius: BorderRadius.circular(24.0),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.05),
+                  ),
                 ),
                 child: TextField(
                   controller: _msgController,
@@ -340,7 +406,11 @@ class _ChatPageState extends State<ChatPage> {
                 shape: BoxShape.circle,
               ),
               child: IconButton(
-                icon: const Icon(Icons.send_rounded, color: Colors.black, size: 20),
+                icon: const Icon(
+                  Icons.send_rounded,
+                  color: Colors.black,
+                  size: 20,
+                ),
                 onPressed: _sendMessage,
               ),
             ),

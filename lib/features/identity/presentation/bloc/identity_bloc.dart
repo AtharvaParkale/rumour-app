@@ -14,10 +14,10 @@ class IdentityBloc extends Bloc<IdentityEvent, IdentityState> {
     required GetLocalIdentity getLocalIdentity,
     required FetchRandomUser fetchRandomUser,
     required SaveIdentity saveIdentity,
-  })  : _getLocalIdentity = getLocalIdentity,
-        _fetchRandomUser = fetchRandomUser,
-        _saveIdentity = saveIdentity,
-        super(IdentityInitial()) {
+  }) : _getLocalIdentity = getLocalIdentity,
+       _fetchRandomUser = fetchRandomUser,
+       _saveIdentity = saveIdentity,
+       super(IdentityInitial()) {
     on<CheckIdentity>(_onCheckIdentity);
     on<GenerateIdentity>(_onGenerateIdentity);
     on<SaveIdentityEvent>(_onSaveIdentityEvent);
@@ -33,7 +33,6 @@ class IdentityBloc extends Bloc<IdentityEvent, IdentityState> {
       if (user != null) {
         emit(IdentityExists(user));
       } else {
-        // Dispatch GenerateIdentity effectively chaining the logical flow internally securely
         add(GenerateIdentity(event.roomId));
       }
     } catch (e) {
